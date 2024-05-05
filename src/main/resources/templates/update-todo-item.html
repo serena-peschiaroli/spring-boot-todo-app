@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"></html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" />
+    <title>To do update</title>
+</head>
+<body>
+
+    <div class="container">
+        <div class="col-md-6">
+            <!-- form setup to psot updates -->
+            <form action="#" th:action="@{/todo/{id}(id=${todo.id})}" th:object="${todo}" method="POST">
+                <!-- input field for title -->
+                <div class="form-group">
+                    <label for="title"> Title</label>
+                    <!-- display errors for title field -->
+                    <input class="form-control" type="text" th:field="*{title}" id="title" placeholder="Add a title">
+                    <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+                </div>
+                <!-- checlkbox for completed status -->
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" th:checked="${completed} == true" th:field="*{completed}" id="completed">
+                        Complete
+                    </label>
+                </div>
+                <!--sbmit btn  -->
+
+                <button class="btn btn-primary" type="submit">update</button>
+                <!-- hidden fields to keep track of createdDate and modifiedDate fields and send them back with the object -->
+                <input type="hidden" th:field="*{createDate}">
+                <input type="hidden" th:field="*{modifiedDate}">
+                
+            </form>
+        </div>
+    </div>
+    
+    <script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.min.js}"></script>
+</body>
+</html>
