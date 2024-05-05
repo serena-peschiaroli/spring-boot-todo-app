@@ -20,6 +20,11 @@ public class TodoFormController {
     private TodoItemRepository todoItemRepository;
 
 
+    @GetMapping("/create-todo")
+    public String showCreateForm(TodoItem todoItem){
+        return "add-todo-item";
+    }
+
     //http get method to handle request to edit a specific todoitem
     @GetMapping("/edit/{id}")
     public String showUpdateForm(@PathVariable("id") long id, Model model){

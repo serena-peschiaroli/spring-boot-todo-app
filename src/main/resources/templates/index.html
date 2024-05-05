@@ -28,7 +28,7 @@
                 <tbody>
 
                     <!-- loop through each item and create a table -->
-                    <tr th:each="item: ${todoItems}">
+                    <tr th:each="item: ${todoItems}" th:class="{item.completed} ? success : warning">
                         <td th:text="${item.id}">item_id</td>
                         <td th:text="${item.title}">item_title</td>
                         <td th:text="${item.completed}">item_completed</td>
@@ -40,6 +40,8 @@
                                 <a class="btn btn-secondary" th:href="@{/edit/{id}(id=${item.id})}">Edit</a>
                                 <a class="btn btn-danger" th:href="@{/delete/{id}(id=${item.id})}"> Delete</a>
                             </div>
+
+                            <p><a class="btn btn-success" th:href="@{/create-todo}"> Add a Todo</a></p>
                         </td>
 
                     </tr>

@@ -41,6 +41,18 @@ public class TodoItemController {
         return modelAndView;
     }
 
+    @PostMapping("/todo")
+    public String createTodoItem(@Valid TodoItem todoItem, BindingResult result, Model model){
+        if(result.hasErrors()){
+            return "add-todo-item";
+
+        }
+        todoItem.setCreateDate(Instant.now());
+        todoItem.setModifiedDate(Instant.now());
+        todoItemRepository.save(todoItem);
+        return "redirect:/";
+    }
+
     /*
      * This method will handle POST request; extracts the id from the urls and make it available as method parameter;
      * valid = tells spring to apply validation ruls based on TodoItem class;
