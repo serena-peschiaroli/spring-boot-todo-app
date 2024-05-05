@@ -5,31 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" />
+    <!-- linkt to font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <title>To do update</title>
 </head>
 <body>
 
     <div class="container">
-        <div class="col-md-6">
+        <div class="col-md-6 mt-2">
+            <h3 class="text-center mb-3">Update todo</h3>
             <!-- form setup to psot updates -->
             <form action="#" th:action="@{/todo/{id}(id=${todo.id})}" th:object="${todo}" method="POST">
                 <!-- input field for title -->
-                <div class="form-group">
-                    <label for="title"> Title</label>
-                    <!-- display errors for title field -->
-                    <input class="form-control" type="text" th:field="*{title}" id="title" placeholder="Add a title">
-                    <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+                <div class="form-group mb-3">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="fas fa-pen"></i></span>
+                        <input type="text" class="form-control" th:field="*{title}" placeholder="Enter title">
+                    </div>
+                    <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="alert alert-danger mt-2"></span>
                 </div>
                 <!-- checlkbox for completed status -->
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" th:checked="${completed} == true" th:field="*{completed}" id="completed">
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" th:field="*{completed}" id="completed">
+                    <label class="form-check-label" for="completed">
                         Complete
                     </label>
                 </div>
                 <!--sbmit btn  -->
 
-                <button class="btn btn-primary" type="submit">update</button>
+                <button type="submit" class="btn btn-success btn-block">Update</button>
+
                 <!-- hidden fields to keep track of createdDate and modifiedDate fields and send them back with the object -->
                 <input type="hidden" th:field="*{createDate}">
                 <input type="hidden" th:field="*{modifiedDate}">

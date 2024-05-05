@@ -6,6 +6,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <!-- Linking Bootstrap CSS from WebJars -->
         <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" />
+        <!-- linkt to font awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
         <title>To Do List</title>
     </head>
     <body>
@@ -13,40 +16,50 @@
         <div class="container">
             <h1 class="text-center">Todo List</h1>
             <hr>
+            <p class="text-end">
+                <a class="btn btn-primary" th:href="@{/create-todo}"><i class="fas fa-plus"></i> Add a Todo</a>
+            </p>
             <!-- dynamic table for displaying todo items -->
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Title</th>
-                        <th>Complete</th>
-                        <th>Created</th>
-                        <th>Modified</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <div class="table-responsive">
 
-                    <!-- loop through each item and create a table -->
-                    <tr th:each="item: ${todoItems}" th:class="{item.completed} ? success : warning">
-                        <td th:text="${item.id}">item_id</td>
-                        <td th:text="${item.title}">item_title</td>
-                        <td th:text="${item.completed}">item_completed</td>
-                        <td th:text="${#temporals.format(item.createDate, 'yy-MM-dd - HH:mm')}">item_createdDate</td>
-                        <td th:text="${#temporals.format(item.modifiedDate, 'yy-MM-dd - HH:mm')}">item_modifiedDate</td>
-                        <!-- action btns for each item -->
-                        <td>
-                            <div class="btn btn-group-sm" role="group">
-                                <a class="btn btn-secondary" th:href="@{/edit/{id}(id=${item.id})}">Edit</a>
-                                <a class="btn btn-danger" th:href="@{/delete/{id}(id=${item.id})}"> Delete</a>
-                            </div>
+            
+                <table class="table table-bordered table-striped table-hover ">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Title</th>
+                            <th>Complete</th>
+                            <th>Created</th>
+                            <th>Modified</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                            <p><a class="btn btn-success" th:href="@{/create-todo}"> Add a Todo</a></p>
-                        </td>
+                        <!-- loop through each item and create a table -->
+                        <tr th:each="item: ${todoItems}" th:class="${item.completed ? 'table-success' : 'table-light'}">
+                            <td th:text="${item.id}">item_id</td>
+                            <td th:text="${item.title}">item_title</td>
+                            <td class="text-center">
+                                <i th:class="${item.completed ? 'fas fa-check-circle text-success' : 'far fa-circle text-muted'}"></i>
+                            </td>
 
-                    </tr>
-                </tbody>
-            </table>
+                            <td th:text="${#temporals.format(item.createDate, 'yy-MM-dd - HH:mm')}">item_createdDate</td>
+                            <td th:text="${#temporals.format(item.modifiedDate, 'yy-MM-dd - HH:mm')}">item_modifiedDate</td>
+                            <!-- action btns for each item -->
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a class="btn btn-outline-secondary" th:href="@{/edit/{id}(id=${item.id})}" title="Edit"><i
+                                            class="fas fa-edit"></i></a>
+                                    <a class="btn btn-outline-danger" th:href="@{/delete/{id}(id=${item.id})}" title="Delete"><i
+                                            class="fas fa-trash-alt"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        
         </div>
 
         <!-- adding jquery and bootstrap js from webjars -->
