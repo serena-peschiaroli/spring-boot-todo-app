@@ -1,6 +1,7 @@
 package com.serpes.springboottodoapp.controllers;
 
 import java.time.Instant;
+import java.time.ZoneId;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +38,8 @@ public class TodoItemController {
         //create a modelandView obj, specifying "index" as viwe name
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("todoItems", todoItemRepository.findAll());
+        //adding current date to the object
+        modelAndView.addObject("today", Instant.now().atZone(ZoneId.systemDefault()).toLocalDate().getDayOfWeek());
         //returns the ModelAndView obj, which spring MVC will use to render the index view
         return modelAndView;
     }
