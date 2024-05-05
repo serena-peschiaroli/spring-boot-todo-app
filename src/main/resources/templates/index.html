@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!-- Linking Bootstrap CSS from WebJars -->
         <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" />
         <title>To Do List</title>
     </head>
@@ -12,7 +13,7 @@
         <div class="container">
             <h1 class="text-center">Todo List</h1>
             <hr>
-            
+            <!-- dynamic table for displaying todo items -->
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -25,18 +26,28 @@
                     </tr>
                 </thead>
                 <tbody>
+
+                    <!-- loop through each item and create a table -->
                     <tr th:each="item: ${todoItems}">
                         <td th:text="${item.id}">item_id</td>
                         <td th:text="${item.title}">item_title</td>
                         <td th:text="${item.completed}">item_completed</td>
-                        <td th:text="${item.createDate}">item_createdDate</td>
-                        <td th:text="${item.modifiedDate}">item_modifiedDate</td>
+                        <td th:text="${#temporals.format(item.createDate, 'yy-MM-dd - HH:mm')}">item_createdDate</td>
+                        <td th:text="${#temporals.format(item.modifiedDate, 'yy-MM-dd - HH:mm')}">item_modifiedDate</td>
+                        <!-- action btns for each item -->
+                        <td>
+                            <div class="btn btn-group-sm" role="group">
+                                <a class="btn btn-secondary" th:href="@{/edit/{id}(id=${item.id})}">Edit</a>
+                                <a class="btn btn-danger" th:href="@{/delete/{id}(id=${item.id})}"> Delete</a>
+                            </div>
+                        </td>
 
                     </tr>
                 </tbody>
             </table>
         </div>
-        
+
+        <!-- adding jquery and bootstrap js from webjars -->
         <script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
         <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.min.js}"></script>
     </body>

@@ -1,13 +1,22 @@
 package com.serpes.springboottodoapp.controllers;
 
+import java.time.Instant;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.serpes.springboottodoapp.models.TodoItem;
 import com.serpes.springboottodoapp.repositories.TodoItemRepository;
+
+import jakarta.validation.Valid;
 
 
 
@@ -30,6 +39,28 @@ public class TodoItemController {
         modelAndView.addObject("todoItems", todoItemRepository.findAll());
         //returns the ModelAndView obj, which spring MVC will use to render the index view
         return modelAndView;
+    }
+
+    /*
+     * This method will handle POST request; extracts the id from the urls and make it available as method parameter;
+     * valid = tells spring to apply validation ruls based on TodoItem class;
+     * BindingResul = if there are validation error, the are added to this object;
+     */
+    @PostMapping("/todo/{id}")
+    public String updateTodoItem(@PathVariable("id")long id, @Valid TodoItem todoItem, BindingResult result, Model model){
+        //check for validation errors in the submitten item
+        if(result.hasErrors()){
+            //if errors, set the correct id on the object
+            todoItem.setId(id);
+            //return the form view again to display errors
+            return "update-todo-item";
+        }
+        //no errors: update the modified date to the current date
+        todoItem.setModifiedDate(Instant.now());
+        //save the updated item to the repository
+        todoItemRepository.save(todoItem);
+        //redirect to the root
+        return "redirect:/";
     }
 
 
