@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,7 +46,7 @@ public class TodoItemController {
     }
 
     @PostMapping("/todo")
-    public String createTodoItem(@Valid TodoItem todoItem, BindingResult result, Model model){
+    public String createTodoItem(@Valid @ModelAttribute("todoItem") TodoItem todoItem, BindingResult result, Model model){
         if(result.hasErrors()){
             return "add-todo-item";
 
@@ -62,7 +63,7 @@ public class TodoItemController {
      * BindingResul = if there are validation error, the are added to this object;
      */
     @PostMapping("/todo/{id}")
-    public String updateTodoItem(@PathVariable("id")long id, @Valid TodoItem todoItem, BindingResult result, Model model){
+    public String updateTodoItem(@PathVariable("id") long id, @Valid @ModelAttribute("todoItem") TodoItem todoItem, BindingResult result, Model model){
         //check for validation errors in the submitten item
         if(result.hasErrors()){
             //if errors, set the correct id on the object
@@ -70,6 +71,13 @@ public class TodoItemController {
             //return the form view again to display errors
             return "update-todo-item";
         }
+
+        TodoItem existingTodoItem = todoItemRepository
+                .findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("TodoItem id: " + id + " not found"));
+
+        todoItem.setId(id);
+        todoItem.setCreateDate(existingTodoItem.getCreateDate());
         //no errors: update the modified date to the current date
         todoItem.setModifiedDate(Instant.now());
         //save the updated item to the repository

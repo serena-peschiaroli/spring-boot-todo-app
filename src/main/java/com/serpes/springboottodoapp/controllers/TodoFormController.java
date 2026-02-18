@@ -33,7 +33,7 @@ public class TodoFormController {
         .findById(id)
         .orElseThrow(() -> new IllegalArgumentException("TodoItem id: " + id + " not found"));
         //adds the item to the model under the name 'todo'
-        model.addAttribute("todo", todoItem);
+        model.addAttribute("todoItem", todoItem);
         //returns the name of the thymeleaf template to render the response
         return "update-todo-item";
     }

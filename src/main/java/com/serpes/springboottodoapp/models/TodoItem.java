@@ -8,8 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity // marks class as jpa entituy
 @Table(name = "todo_items") // specifies the table in the db tha this entity will map to
@@ -17,30 +15,20 @@ public class TodoItem {
 
     @Id // primary key
     @GeneratedValue(strategy = GenerationType.AUTO) //specifies the way of increment
-    @Getter //lombok annotation for creating a getter method for this field
-    @Setter //lombok annotation for setter
     // id for each item
     private Long id;
 
-    @Getter
-    @Setter
     //validation constraint, title cannot be empty
     @NotBlank(message = "Title is required")
     //title
     private String title;
 
-    @Getter
-    @Setter
     // item status
     private boolean completed;
 
-    @Getter
-    @Setter
     //timestamp when item is created
     private Instant createDate;
 
-    @Getter
-    @Setter
     //timestamp for item modification
     private Instant modifiedDate;
 
@@ -53,6 +41,46 @@ public class TodoItem {
         this.completed = false;
         this.createDate = Instant.now();
         this.modifiedDate = Instant.now();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    public Instant getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Instant createDate) {
+        this.createDate = createDate;
+    }
+
+    public Instant getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(Instant modifiedDate) {
+        this.modifiedDate = modifiedDate;
     }
 
     //override of tostring to provide a string representation of an item

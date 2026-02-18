@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en"></html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +16,7 @@
         <div class="col-md-6 mt-2">
             <h3 class="text-center mb-3">Update todo</h3>
             <!-- form setup to psot updates -->
-            <form action="#" th:action="@{/todo/{id}(id=${todo.id})}" th:object="${todo}" method="POST">
+            <form action="#" th:action="@{/todo/{id}(id=${todoItem.id})}" th:object="${todoItem}" method="POST">
                 <!-- input field for title -->
                 <div class="form-group mb-3">
                     <div class="input-group mb-3">
@@ -37,6 +37,7 @@
                 <button type="submit" class="btn btn-success btn-block">Update</button>
 
                 <!-- hidden fields to keep track of createdDate and modifiedDate fields and send them back with the object -->
+                <input type="hidden" th:field="*{id}">
                 <input type="hidden" th:field="*{createDate}">
                 <input type="hidden" th:field="*{modifiedDate}">
                 
