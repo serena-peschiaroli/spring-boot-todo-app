@@ -14,6 +14,11 @@
     <body>
 
         <div class="container mt-5">
+            <div class="d-flex justify-content-end">
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-outline-dark btn-sm">Logout</button>
+                </form>
+            </div>
             <h1 class="text-center">Todo List</h1>
             <hr>
             <p th:text="|Happy ${today}|"> Today</p>
